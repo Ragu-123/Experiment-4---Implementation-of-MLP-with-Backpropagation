@@ -118,7 +118,51 @@ Normalize our dataset.
 8. Finally, call the functions confusion_matrix(), and the classification_report() in order to evaluate the performance of our classifier.
 
 ## PROGRAM 
+```
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+data=pd.read_csv("/content/IRIS (1).csv")
+data.head()
+
+name=["sepal_length","sepal_width","petal_length","petal_width"]
+x=data.iloc[:,0:4]
+y=data.select_dtypes(include=[object])
+x.head()
+y.head()
+
+from sklearn import preprocessing
+label_encoder=preprocessing.LabelEncoder()
+data['species']=label_encoder.fit_transform(data['species'])
+data['species'].unique()
+
+from sklearn.model_selection import train_test_split
+x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=0.20)
+from sklearn.preprocessing import StandardScaler
+scaler=StandardScaler()
+scaler.fit(x_train)
+x_train=scaler.transform(x_train)
+x_test=scaler.transform(x_test)
+
+from sklearn.metrics import classification_report, confusion_matrix
+from sklearn.neural_network import MLPClassifier
+mlp=MLPClassifier(hidden_layer_sizes=(10,10,10),max_iter=1000)
+mlp.fit(x_train,y_train.values.ravel())
+predictions=mlp.predict(x_test)
+print(predictions)
+
+print(confusion_matrix(y_test,predictions))
+print(classification_report(y_test,predictions))
+```
+
 
 ## OUTPUT 
+![image](https://github.com/Ragu-123/Experiment-4---Implementation-of-MLP-with-Backpropagation/assets/113915622/a8220741-e7e1-4246-89f3-4d72f0ab1815)
+![image](https://github.com/Ragu-123/Experiment-4---Implementation-of-MLP-with-Backpropagation/assets/113915622/b56726aa-d159-4e90-8d94-f2380df40d6b)
+![image](https://github.com/Ragu-123/Experiment-4---Implementation-of-MLP-with-Backpropagation/assets/113915622/5954e94c-5836-4c92-84be-9c9fa2c79a02)
+![image](https://github.com/Ragu-123/Experiment-4---Implementation-of-MLP-with-Backpropagation/assets/113915622/f9967425-714f-45c7-81d5-b9394ae8513e)
+![image](https://github.com/Ragu-123/Experiment-4---Implementation-of-MLP-with-Backpropagation/assets/113915622/2f6c25c0-26bd-4300-9712-671622c30f5c)
+
 
 ## RESULT
+Thus Implementation-of-MLP-with-Backpropagation problem is executed successfully.
